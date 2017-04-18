@@ -25,14 +25,12 @@ import Swiper from 'react-native-animated-swiper';
 
 // all <Swiper /> child components must have a (backgroundColor: string) prop
 const Example = () => (
-  <View style={{ flex: 1 }}>
-    <Swiper dotsColor="rgba(255, 255, 255, 0.25)">
-      <Slide backgroundColor="#4285f4" title="Lorem" />
-      <Slide backgroundColor="#0f9d58" title="ipsum" />
-      <Slide backgroundColor="#f4b400" title="dolor" />
-      <Slide backgroundColor="#db4437" title="sit" />
-    </Swiper>
-  </View>
+  <Swiper dotsColor="rgba(255, 255, 255, 0.25)">
+    <Slide backgroundColor="#4285f4" title="Lorem" />
+    <Slide backgroundColor="#0f9d58" title="ipsum" />
+    <Slide backgroundColor="#f4b400" title="dolor" />
+    <Slide backgroundColor="#db4437" title="sit" />
+  </Swiper>
 );
 
 const Slide = ({ title }) => (
