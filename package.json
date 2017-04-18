@@ -1,0 +1,9 @@
+{
+  "name": "react-native-animated-swiper",
+  "version": "0.0.1",
+  "main": "swiper.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sonaye/react-native-animated-swiper.git"
+  }
+}
