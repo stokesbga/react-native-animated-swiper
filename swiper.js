@@ -3,7 +3,13 @@ import { Animated, Dimensions, StyleSheet, View } from 'react-native';
 
 const { height, width } = Dimensions.get('window');
 
-const Swiper = ({ bounces, dotsColor, children: slides, hideDots }) => {
+const Swiper = ({
+  bounces,
+  children: slides,
+  dotsColor,
+  dotsColorActive,
+  hideDots
+}) => {
   const scroll = new Animated.Value(0);
   const position = Animated.divide(scroll, width);
 
@@ -57,33 +63,55 @@ const Swiper = ({ bounces, dotsColor, children: slides, hideDots }) => {
         ))}
       </Animated.ScrollView>
       {!hideDots &&
-        <View
-          style={{
-            alignItems: 'center',
-            bottom: 20,
-            flexDirection: 'row',
-            justifyContent: 'center',
-            position: 'absolute',
-            zIndex: 99,
-            width
-          }}>
-          {slides.map((slide, i) => (
-            <Animated.View
-              key={`swiper-dot-${i}`}
-              style={{
-                backgroundColor: dotsColor || 'rgba(0, 0, 0, 0.25)',
-                borderRadius: 4,
-                height: 8,
-                marginLeft: 4,
-                marginRight: 4,
-                opacity: Animated.add(position, 1 - i),
-                width: 8
-              }}
-            />
-          ))}
+        <View>
+          <View style={[styles.dotContainer, { zIndex: 99 }]}>
+            {slides.map((slide, i) => (
+              <Animated.View
+                key={`swiper-dot-active-${i}`}
+                style={[
+                  styles.dot,
+                  {
+                    backgroundColor: dotsColorActive || 'rgba(0, 0, 0, 0.75)',
+                    opacity: Animated.add(position, 1 - i)
+                  }
+                ]}
+              />
+            ))}
+          </View>
+          <View style={[styles.dotContainer, { zIndex: 98 }]}>
+            {slides.map((slide, i) => (
+              <Animated.View
+                key={`swiper-dot-${i}`}
+                style={[
+                  styles.dot,
+                  {
+                    backgroundColor: dotsColor || 'rgba(0, 0, 0, 0.25)'
+                  }
+                ]}
+              />
+            ))}
+          </View>
         </View>}
     </View>
   );
+};
+
+const styles = {
+  dot: {
+    borderRadius: 4,
+    height: 8,
+    marginLeft: 4,
+    marginRight: 4,
+    width: 8
+  },
+  dotContainer: {
+    alignItems: 'center',
+    bottom: 24,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    position: 'absolute',
+    width
+  }
 };
 
 export default Swiper;

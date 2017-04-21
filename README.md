@@ -7,9 +7,10 @@
 # Usage
 ```javascript
 <Swiper
-  bounces={true}                  // default = true
-  dotsColor="rgba(0, 0, 0, 0.25)" // default = 'rgba(0, 0, 0, 0.25)'
-  hideDots={false}>               // default = false
+  bounces={true}                        // default = true
+  dotsColor="rgba(0, 0, 0, 0.25)"       // default = 'rgba(0, 0, 0, 0.25)'
+  dotsColorActive="rgba(0, 0, 0, 0.75)" // default = 'rgba(0, 0, 0, 0.75)'
+  hideDots={false}>                     // default = false
   <Component />
   <Component />
   <Component />
@@ -25,7 +26,9 @@ import Swiper from 'react-native-animated-swiper';
 
 // all <Swiper /> child components must have a (backgroundColor: string) prop
 const Example = () => (
-  <Swiper dotsColor="rgba(255, 255, 255, 0.25)">
+  <Swiper
+    dotsColor="rgba(255, 255, 255, 0.25)"
+    dotsColorActive="rgba(255, 255, 255, 0.75)">
     <Slide backgroundColor="#4285f4" title="Lorem" />
     <Slide backgroundColor="#0f9d58" title="ipsum" />
     <Slide backgroundColor="#f4b400" title="dolor" />
@@ -49,6 +52,3 @@ const Slide = ({ title }) => (
 
 export default Example;
 ```
-
-## Todo
-- [ ] Improving the dots experience, e.g. showing all of them while highlighting the current one. PRs are welcome!
