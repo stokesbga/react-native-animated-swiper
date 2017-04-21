@@ -49,3 +49,9 @@ const Slide = ({ title }) => (
 
 export default Example;
 ```
+
+## Todo
+- [ ] Improving the dots experience, e.g. showing all of them while highlighting the current one. PRs are welcome!
+
+## Known issues
+- Adding some components to a swiper-child component may cause a crash, unknown issue (haven't investigated it yet.)
