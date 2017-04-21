@@ -1,6 +1,7 @@
 {
   "name": "react-native-animated-swiper",
-  "version": "0.0.3",
+  "description": "A simple swiper component for React Native.",
+  "version": "0.0.4",
   "main": "swiper.js",
   "repository": {
     "type": "git",
