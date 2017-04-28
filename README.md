@@ -4,17 +4,34 @@
 # Installation
 `yarn add react-native-animated-swiper`
 
-# Usage
+# Definition
 ```javascript
-<Swiper
-  bounces={true}                        // default = true
-  dotsColor="rgba(0, 0, 0, 0.25)"       // default = 'rgba(0, 0, 0, 0.25)'
-  dotsColorActive="rgba(0, 0, 0, 0.75)" // default = 'rgba(0, 0, 0, 0.75)'
-  hideDots={false}>                     // default = false
-  <Component />
-  <Component />
-  <Component />
-</Swiper>
+type swiper = {
+  bounces?: boolean,        // default = true
+  children: any,            // all children must have a (backgroundColor: string) prop
+  dots?: boolean,           // default = false
+  dotsColor?: string,       // default = 'rgba(0, 0, 0, 0.25)'
+  dotsColorActive?: string, // default = 'rgba(0, 0, 0, 0.75)'
+  dotStyle?: Object,        // default = dotStyleDefault
+  dotStyleActive?: Object,  // default = {}
+  shadow?: boolean,         // default = false
+  shadowStyle?: Object      // default = shadowStyleDefault
+};
+
+type dotStyleDefault = {
+  borderRadius: 4,
+  height: 8,
+  marginLeft: 4,
+  marginRight: 4,
+  width: 8
+};
+
+type shadowStyleDefault = {
+  backgroundColor: '#fff',
+  shadowColor: '#000',
+  shadowOpacity: 0.125,
+  shadowRadius: 8
+};
 ```
 
 ## Example
@@ -24,9 +41,9 @@ import { Text, View } from 'react-native';
 
 import Swiper from 'react-native-animated-swiper';
 
-// all <Swiper /> child components must have a (backgroundColor: string) prop
 const Example = () => (
   <Swiper
+    dots
     dotsColor="rgba(255, 255, 255, 0.25)"
     dotsColorActive="rgba(255, 255, 255, 0.75)">
     <Slide backgroundColor="#4285f4" title="Lorem" />
@@ -40,7 +57,7 @@ const Slide = ({ title }) => (
   <View
     style={{
       alignItems: 'center',
-      backgroundColor: 'transparent', // must be transparent
+      backgroundColor: 'transparent', // should be transparent for a smooth transition
       flex: 1,
       justifyContent: 'center'
     }}>

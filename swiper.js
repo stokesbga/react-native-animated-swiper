@@ -1,100 +1,118 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Animated, Dimensions, StyleSheet, View } from 'react-native';
 
 const { height, width } = Dimensions.get('window');
 
-const Swiper = ({
-  bounces,
-  children: slides,
-  dotsColor,
-  dotsColorActive,
-  hideDots
-}) => {
-  const scroll = new Animated.Value(0);
-  const position = Animated.divide(scroll, width);
+class Swiper extends Component {
+  scroll = new Animated.Value(0);
+  position = Animated.divide(this.scroll, width);
 
-  const colors = [];
+  componentWillMount() {
+    const colors = [];
 
-  React.Children.map(slides, ({ props: { backgroundColor } }) => {
-    if (!backgroundColor)
-      throw new Error(
-        'All <Swiper /> child components must have a (backgroundColor: string) prop.'
-      );
+    React.Children.map(
+      this.props.children,
+      ({ props: { backgroundColor } }) => {
+        if (!backgroundColor)
+          throw new Error(
+            'All <Swiper /> child components must have a (backgroundColor: string) prop.'
+          );
 
-    colors.push(backgroundColor);
-  });
+        colors.push(backgroundColor);
+      }
+    );
 
-  const backgroundColor = position.interpolate({
-    inputRange: colors.map((color, i) => i),
-    outputRange: colors
-  });
+    this.backgroundColor = this.position.interpolate({
+      inputRange: colors.map((color, i) => i),
+      outputRange: colors
+    });
+  }
 
-  return (
-    <View style={{ flex: 1 }}>
-      <Animated.View style={[StyleSheet.absoluteFill, { backgroundColor }]} />
-      <Animated.ScrollView
-        bounces={bounces || true}
-        horizontal
-        onScroll={Animated.event([
-          { nativeEvent: { contentOffset: { x: scroll } } }
-        ])}
-        pagingEnabled
-        scrollEventThrottle={16}
-        showsHorizontalScrollIndicator={false}>
-        {slides.map((slide, i) => (
-          <View key={`swiper-slide-${i}`} style={{ width }}>
-            <Animated.View
-              style={{
-                transform: [
-                  {
-                    translateX: Animated.multiply(
-                      Animated.add(position, -i),
-                      -200
-                    )
-                  }
-                ],
-                width
-              }}>
-              <Animated.View style={{ height }}>
-                {slide}
+  render() {
+    return (
+      <View style={{ flex: 1 }}>
+        <Animated.View
+          style={[
+            StyleSheet.absoluteFill,
+            { backgroundColor: this.backgroundColor }
+          ]}
+        />
+        <Animated.ScrollView
+          bounces={this.props.bounces || true}
+          horizontal
+          onScroll={Animated.event([
+            { nativeEvent: { contentOffset: { x: this.scroll } } }
+          ])}
+          pagingEnabled
+          scrollEventThrottle={16}
+          showsHorizontalScrollIndicator={false}>
+          {this.props.children.map((slide, i) => (
+            <View key={`swiper-slide-${i}`} style={{ width }}>
+              <Animated.View
+                style={{
+                  transform: [
+                    {
+                      translateX: Animated.multiply(
+                        Animated.add(this.position, -i),
+                        -200
+                      )
+                    }
+                  ],
+                  width
+                }}>
+                <Animated.View style={{ height }}>
+                  {slide}
+                </Animated.View>
               </Animated.View>
-            </Animated.View>
-          </View>
-        ))}
-      </Animated.ScrollView>
-      {!hideDots &&
-        <View>
-          <View style={[styles.dotContainer, { zIndex: 99 }]}>
-            {slides.map((slide, i) => (
-              <Animated.View
-                key={`swiper-dot-active-${i}`}
+            </View>
+          ))}
+        </Animated.ScrollView>
+        {this.props.dots &&
+          <View>
+            <View style={[styles.dotContainer, { zIndex: 99 }]}>
+              {this.props.children.map((slide, i) => (
+                <Animated.View
+                  key={`swiper-dot-active-${i}`}
+                  style={[
+                    styles.dot,
+                    this.props.dotStyleActive,
+                    {
+                      backgroundColor: this.props.dotsColorActive ||
+                        'rgba(0, 0, 0, 0.75)',
+                      opacity: Animated.add(this.position, 1 - i)
+                    }
+                  ]}
+                />
+              ))}
+            </View>
+            <View style={[styles.dotContainer, { zIndex: 98 }]}>
+              {this.props.children.map((slide, i) => (
+                <Animated.View
+                  key={`swiper-dot-${i}`}
+                  style={[
+                    styles.dot,
+                    this.props.dotStyle,
+                    {
+                      backgroundColor: this.props.dotsColor ||
+                        'rgba(0, 0, 0, 0.25)'
+                    }
+                  ]}
+                />
+              ))}
+            </View>
+            {this.props.shadow &&
+              <View
                 style={[
-                  styles.dot,
-                  {
-                    backgroundColor: dotsColorActive || 'rgba(0, 0, 0, 0.75)',
-                    opacity: Animated.add(position, 1 - i)
-                  }
+                  styles.shadowContainer,
+                  styles.shadow,
+                  this.props.shadowStyle
                 ]}
-              />
-            ))}
-          </View>
-          <View style={[styles.dotContainer, { zIndex: 98 }]}>
-            {slides.map((slide, i) => (
-              <Animated.View
-                key={`swiper-dot-${i}`}
-                style={[
-                  styles.dot,
-                  {
-                    backgroundColor: dotsColor || 'rgba(0, 0, 0, 0.25)'
-                  }
-                ]}
-              />
-            ))}
-          </View>
-        </View>}
-    </View>
-  );
-};
+              />}
+          </View>}
+      </View>
+    );
+  }
+}
 
 const styles = {
   dot: {
@@ -106,11 +124,24 @@ const styles = {
   },
   dotContainer: {
     alignItems: 'center',
-    bottom: 24,
+    bottom: 29,
     flexDirection: 'row',
     justifyContent: 'center',
     position: 'absolute',
     width
+  },
+  shadowContainer: {
+    bottom: 0,
+    height: 70,
+    position: 'absolute',
+    width,
+    zIndex: 97
+  },
+  shadow: {
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOpacity: 0.125,
+    shadowRadius: 8
   }
 };
 
