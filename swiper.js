@@ -13,12 +13,7 @@ class Swiper extends Component {
     React.Children.map(
       this.props.children,
       ({ props: { backgroundColor } }) => {
-        if (!backgroundColor)
-          throw new Error(
-            'All <Swiper /> child components must have a (backgroundColor: string) prop.'
-          );
-
-        colors.push(backgroundColor);
+        if (backgroundColor) colors.push(backgroundColor);
       }
     );
 
