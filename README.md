@@ -41,7 +41,7 @@ import { Text, View } from 'react-native';
 
 import Swiper from 'react-native-animated-swiper';
 
-const Example = () => (
+const Example = () =>
   <Swiper
     dots
     dotsColor="rgba(255, 255, 255, 0.25)"
@@ -50,22 +50,15 @@ const Example = () => (
     <Slide backgroundColor="#0f9d58" title="ipsum" />
     <Slide backgroundColor="#f4b400" title="dolor" />
     <Slide backgroundColor="#db4437" title="sit" />
-  </Swiper>
-);
+  </Swiper>;
 
-const Slide = ({ title }) => (
-  <View
-    style={{
-      alignItems: 'center',
-      backgroundColor: 'transparent', // should be transparent for a smooth transition
-      flex: 1,
-      justifyContent: 'center'
-    }}>
-    <Text style={{ color: '#fff', fontSize: 48 }}>
+const Slide = ({ title }) =>
+  <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
+    <Text
+      style={{ backgroundColor: 'transparent', color: '#fff', fontSize: 48 }}>
       {title}
     </Text>
-  </View>
-);
+  </View>;
 
 export default Example;
 ```
