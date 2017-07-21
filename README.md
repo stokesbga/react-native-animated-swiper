@@ -15,7 +15,8 @@ type swiper = {
   dotStyle?: Object,        // default = dotStyleDefault
   dotStyleActive?: Object,  // default = {}
   shadow?: boolean,         // default = false
-  shadowStyle?: Object      // default = shadowStyleDefault
+  shadowStyle?:, Object     // default = shadowStyleDefault
+  dotsBottom?: number       // default = 29
 };
 
 type dotStyleDefault = {

@@ -56,7 +56,11 @@ export default class extends Component {
                   this.props.shadowStyle
                 ]}
               />}
-            <View style={styles.dotContainer}>
+            <View
+              style={[
+                styles.dotContainer,
+                { bottom: this.props.dotsBottom || 29 }
+              ]}>
               {this.props.children.map((slide, i) =>
                 <View
                   key={`swiper-dot-${i}`}
@@ -71,7 +75,11 @@ export default class extends Component {
                 />
               )}
             </View>
-            <View style={styles.dotContainer}>
+            <View
+              style={[
+                styles.dotContainer,
+                { bottom: this.props.dotsBottom || 29 }
+              ]}>
               {this.props.children.map((slide, i) =>
                 <Animated.View
                   key={`swiper-dot-active-${i}`}
@@ -103,7 +111,6 @@ const styles = {
   },
   dotContainer: {
     alignItems: 'center',
-    bottom: 29,
     flexDirection: 'row',
     justifyContent: 'center',
     position: 'absolute',
