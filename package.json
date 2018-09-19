@@ -1,5 +1,5 @@
 {
-  "name": "react-native-animated-swiper",
+  "name": "@outfix/react-native-animated-swiper",
   "description": "A simple swiper component for React Native.",
   "version": "0.0.8",
   "main": "swiper.js",
